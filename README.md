@@ -6,7 +6,7 @@
 2. 问题抽象：建立这类问题的 通用解决模型(程序设计)
 3. 架构与实现
 
-## 项目整体介绍(16 天)
+## 项目整体介绍
 
 - Book Api Server
 - 用户中心
@@ -34,3 +34,15 @@
 ## Gin + GORM 开发简单的 Book API Server
 
 从写脚本开始 与 学会合理使用包来组织你的项目工程
+
+### 初始化 mod
+
+```sh
+go mod init "github.com/sword-demon/go18"
+```
+
+### 安装 gin
+
+```sh
+go get github.com/gin-gonic/gin
+```
