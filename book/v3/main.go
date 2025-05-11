@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sword-demon/go18/book/v2/config"
 	"github.com/sword-demon/go18/book/v3/handlers"
+	"log"
 )
 
 func main() {
@@ -12,6 +13,7 @@ func main() {
 	path := "application.yaml"
 	err := config.LoadConfigFromYaml(path)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 
