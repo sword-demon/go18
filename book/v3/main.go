@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sword-demon/go18/book/v2/config"
+	"github.com/sword-demon/go18/book/v3/exception"
 	"github.com/sword-demon/go18/book/v3/handlers"
 	"log"
 )
@@ -17,12 +18,13 @@ func main() {
 		return
 	}
 
-	r := gin.Default()
+	server := gin.New()
+	server.Use(gin.Logger(), exception.Recovery())
 	h := handlers.NewBookApiHandler()
-	h.Registry(r)
+	h.Registry(server)
 
 	ac := config.C().Application
-	if err := r.Run(fmt.Sprintf("%s:%d", ac.Host, ac.Port)); err != nil {
+	if err := server.Run(fmt.Sprintf("%s:%d", ac.Host, ac.Port)); err != nil {
 		panic(err)
 	}
 }
