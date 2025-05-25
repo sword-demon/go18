@@ -24,7 +24,7 @@ func main() {
 		})
 	})
 
-	if err := r.Run(":8081"); err != nil {
+	if err := r.Run(":8080"); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
