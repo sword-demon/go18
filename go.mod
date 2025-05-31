@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/assert/v2 v2.2.0
 	github.com/infraboard/mcube/v2 v2.0.59
+	github.com/infraboard/modules v0.0.12
 	github.com/rs/zerolog v1.34.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/mysql v1.5.7
