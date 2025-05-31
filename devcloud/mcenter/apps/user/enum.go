@@ -1,0 +1,18 @@
+package user
+
+type PROVIDER int32
+
+const (
+	PROVIDDER_LOCAL       PROVIDER = 0
+	PROVIDER_LDAP         PROVIDER = 1
+	PROVIDER_FEISHU       PROVIDER = 2
+	PROVIDER_DINGDING     PROVIDER = 3
+	PROVIDER_WEICHAT_WORK PROVIDER = 4
+)
+
+type CREATE_TYPE int
+
+const (
+	// 系统初始化
+	CREATE_TYPE_INIT CREATE_TYPE = iota
+)

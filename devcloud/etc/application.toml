@@ -1,0 +1,22 @@
+# 所有的配置
+
+[app]
+name = "devcloud"
+description = "app desc"
+address = "localhost"
+ecrypt_key = "wujiedeyouxi"
+
+[datasource]
+provider = "mysql"
+host = "127.0.0.1"
+port = 3306
+database = "devcloud_go18"
+username = "root"
+password = "admin888"
+auto_migrate = true
+debug = true
+
+[http]
+host = "127.0.0.1"
+port = 8080
+path_prefix = "api"
