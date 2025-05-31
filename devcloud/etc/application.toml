@@ -3,7 +3,7 @@
 [app]
 name = "devcloud"
 description = "app desc"
-address = "localhost"
+address = "http://127.0.0.1:8080"
 ecrypt_key = "wujiedeyouxi"
 
 [datasource]
@@ -13,8 +13,8 @@ port = 3306
 database = "devcloud_go18"
 username = "root"
 password = "admin888"
-auto_migrate = true
-debug = true
+auto_migrate = false
+debug = false
 
 [http]
 host = "127.0.0.1"

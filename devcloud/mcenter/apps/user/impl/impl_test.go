@@ -5,3 +5,20 @@
 // version of this repository is https://github.com/sword-demon/go18.
 
 package impl
+
+import (
+	"context"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/user"
+	"github.com/sword-demon/go18/devcloud/mcenter/test"
+)
+
+var (
+	impl user.Service
+	ctx  = context.Background()
+)
+
+// 初始化测试环境
+func init() {
+	test.DevelopmentSet()
+	impl = user.GetService()
+}

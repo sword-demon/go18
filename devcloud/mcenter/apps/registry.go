@@ -5,3 +5,14 @@
 // version of this repository is https://github.com/sword-demon/go18.
 
 package apps
+
+import (
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/user/api"
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/user/impl"
+
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/api"
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/impl"
+
+	// token 颁发器
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/issuers"
+)

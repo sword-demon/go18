@@ -36,3 +36,9 @@ const (
 	// LockTypeOtherIpLoggedIn 异常 ip 登录
 	LockTypeOtherIpLoggedIn
 )
+
+type DescribeBy int
+
+const (
+	DescribeByAccessToken DescribeBy = iota
+)

@@ -7,8 +7,8 @@
 package user
 
 import (
-	"encoding/json"
 	"fmt"
+	"github.com/infraboard/mcube/v2/tools/pretty"
 	"github.com/infraboard/modules/iam/apps"
 	"golang.org/x/crypto/bcrypt"
 	"time"
@@ -34,8 +34,7 @@ func NewUser(req *CreateUserRequest) *User {
 }
 
 func (u *User) String() string {
-	dj, _ := json.Marshal(u)
-	return string(dj)
+	return pretty.ToJSON(u)
 }
 
 // CheckPassword 判断该用户的密码是否正确
@@ -121,6 +120,7 @@ func (req *CreateUserRequest) PasswordHash() {
 		return
 	}
 
+	// 默认的强度因子是 10
 	b, _ := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 	req.Password = string(b)
 	req.isHashed = true

@@ -6,49 +6,43 @@
 
 package token
 
-import "time"
+import (
+	"context"
+	"fmt"
+	"math/rand/v2"
+)
 
-type IssueParameter map[string]any
+var (
+	charSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+)
 
-func GetIssueParameterValue[T any](p IssueParameter, key string) T {
-	v := p[key]
-	if v != nil {
-		if value, ok := v.(T); ok {
-			return value
-		}
+// MakeBearer 产生随机字符串
+func MakeBearer(length int) string {
+
+	t := make([]byte, 0)
+	for range length {
+		index := rand.IntN(len(charSet)) // 直接调用，无需播种
+		t = append(t, charSet[index])
 	}
-	var zero T
-	return zero
+
+	return string(t)
 }
 
-func (p IssueParameter) Username() string {
-	return GetIssueParameterValue[string](p, "username")
+// issuers 颁发器的容器
+var issuers = map[string]Issuer{}
+
+// RegistryIssuer 注册颁发器
+func RegistryIssuer(name string, p Issuer) {
+	issuers[name] = p
 }
 
-func (p IssueParameter) Password() string {
-	return GetIssueParameterValue[string](p, "password")
+// Issuer 颁发器必须实现的接口
+type Issuer interface {
+	// IssueToken 颁发 token 的接口
+	IssueToken(context.Context, IssueParameter) (*Token, error)
 }
 
-func (p IssueParameter) SetUsername(v string) {
-	p["username"] = v
-}
-
-func (p IssueParameter) SetPassword(v string) {
-	p["password"] = v
-}
-
-/*
-private token issuer parameter
-*/
-
-func (p IssueParameter) AccessToken() string {
-	return GetIssueParameterValue[string](p, "access_token")
-}
-
-func (p IssueParameter) ExpireTTL() time.Duration {
-	return time.Second * time.Duration(GetIssueParameterValue[int64](p, "expired_ttl"))
-}
-
-func (p IssueParameter) SetAccessToken(v string) {
-	p["access_token"] = v
+func GetIssuer(name string) Issuer {
+	fmt.Println(issuers)
+	return issuers[name]
 }

@@ -5,3 +5,39 @@
 // version of this repository is https://github.com/sword-demon/go18.
 
 package impl
+
+import (
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/user"
+	"testing"
+)
+
+func TestQueryUser(t *testing.T) {
+	req := user.NewQueryUserRequest()
+	set, err := impl.QueryUser(ctx, req)
+	if err != nil {
+		t.Fatalf("QueryUser err: %v", err)
+	}
+	t.Log(set)
+}
+
+func TestCreateAdminUser(t *testing.T) {
+	req := user.NewCreateUserRequest()
+	req.UserName = "admin"
+	req.Password = "123456"
+	req.EnabledApi = true
+	req.IsAdmin = true
+	createUser, err := impl.CreateUser(ctx, req)
+	if err != nil {
+		t.Fatalf("CreateUser err: %v", err)
+	}
+	t.Log(createUser)
+}
+
+func TestDescribeUser(t *testing.T) {
+	req := user.NewDescribeUserRequestById("1")
+	describeUser, err := impl.DescribeUser(ctx, req)
+	if err != nil {
+		t.Fatalf("DescribeUser err: %v", err)
+	}
+	t.Log(describeUser)
+}

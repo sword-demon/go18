@@ -8,6 +8,7 @@ package impl
 
 import (
 	"context"
+	"errors"
 	"github.com/infraboard/mcube/v2/exception"
 	"github.com/infraboard/mcube/v2/ioc/config/datasource"
 	"github.com/infraboard/mcube/v2/types"
@@ -54,7 +55,7 @@ func (i *UserServiceImpl) DescribeUser(ctx context.Context, req *user.DescribeUs
 
 	entity := &user.User{}
 	if err := query.First(entity).Error; err != nil {
-		if err == gorm.ErrRecordNotFound {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, exception.NewNotFound("user %s not found", req.DescribeValue)
 		}
 		return nil, err
