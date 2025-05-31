@@ -2,12 +2,18 @@ package book
 
 import (
 	"context"
+	"github.com/infraboard/mcube/v2/http/request"
+	"github.com/infraboard/mcube/v2/ioc/config/validator"
 	"github.com/infraboard/mcube/v2/types"
 )
 
+// Service 接口的定义
 type Service interface {
-	CreateBook(ctx context.Context, request *CreateBookRequest) (*Book, error)
-	QueryBook(ctx context.Context, request *QueryBookRequest) (*types.Set[*Book], error)
+	CreateBook(ctx context.Context, in *CreateBookRequest) (*Book, error)
+	QueryBook(ctx context.Context, in *QueryBookRequest) (*types.Set[*Book], error)
+	FindBook(ctx context.Context, in *FindBookRequest) (*Book, error)
+	UpdateBook(ctx context.Context, in *UpdateBookRequest) (*Book, error)
+	DeleteBook(ctx context.Context, in *DeleteBookRequest) error
 }
 
 type CreateBookRequest struct {
@@ -20,5 +26,39 @@ type CreateBookRequest struct {
 	IsSale *bool `json:"is_sale"  gorm:"column:is_sale"`
 }
 
+func NewCreateBookRequest() *CreateBookRequest {
+	return &CreateBookRequest{}
+}
+
+func (r *CreateBookRequest) SetIsSale(v bool) *CreateBookRequest {
+	r.IsSale = &v
+	return r
+}
+
+func (r *CreateBookRequest) Validate() error {
+	return validator.Validate(r)
+}
+
+type DeleteBookRequest struct {
+	FindBookRequest
+}
+
+type UpdateBookRequest struct {
+	FindBookRequest
+	CreateBookRequest
+}
+
+type FindBookRequest struct {
+	Id uint `json:"id"`
+}
+
 type QueryBookRequest struct {
+	request.PageRequest
+
+	Keywords string `json:"keywords"`
+}
+
+func NewQueryBookRequest() *QueryBookRequest {
+	// 给分页请求参数传递一个默认值
+	return &QueryBookRequest{PageRequest: *request.NewDefaultPageRequest()}
 }
