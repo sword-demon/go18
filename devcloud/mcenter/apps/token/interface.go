@@ -80,7 +80,7 @@ type IssueTokenRequest struct {
 	// Source 端类型
 	Source SOURCE `json:"source"`
 	// Issuer 认证方式
-	Issuer string `json:"issuer.go"`
+	Issuer string `json:"issuer"`
 	// Parameter 参数
 	Parameter IssueParameter `json:"parameter"`
 }
