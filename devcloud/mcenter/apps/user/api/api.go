@@ -30,7 +30,7 @@ func (h *UserRestfulApiHandler) Init() error {
 	ws.Route(ws.POST("").To(h.CreateUser).
 		Doc("创建用户").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
-		//Reads(token.IssueTokenRequest{}).
+		Reads(user.CreateUserRequest{}).
 		Writes(user.User{}).
 		Returns(200, "OK", user.User{}))
 
