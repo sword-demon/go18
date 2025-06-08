@@ -157,6 +157,11 @@ func NewQueryMatchedEndpointRequest() *QueryMatchedEndpointRequest {
 	return &QueryMatchedEndpointRequest{RoleIds: []uint64{}}
 }
 
+func (r *QueryMatchedEndpointRequest) Add(RoleId uint64) *QueryMatchedEndpointRequest {
+	r.RoleIds = append(r.RoleIds, RoleId)
+	return r
+}
+
 // ViewPermissionService 角色菜单管理
 type ViewPermissionService interface {
 	// QueryViewPermission 查询角色关联的视图权限
