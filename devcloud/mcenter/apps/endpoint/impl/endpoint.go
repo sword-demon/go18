@@ -84,8 +84,7 @@ func (s *EndpointServiceImpl) DescribeEndpoint(ctx context.Context, in *endpoint
 	query := datasource.DBFromCtx(ctx)
 
 	ins := endpoint.NewEndpoint()
-	ins.Id = in.Id
-	if err := query.First(ins).Error; err != nil {
+	if err := query.Where("id = ?", in.Id).First(ins).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, exception.NewNotFound("endpoint %s not found", in)
 		}

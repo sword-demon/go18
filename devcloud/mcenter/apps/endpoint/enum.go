@@ -9,7 +9,9 @@ package endpoint
 type AccessMode int8
 
 const (
+	// AccessModeRead 只读模式
 	AccessModeRead = iota
+	// AccessModeReadWrite 读写模式
 	AccessModeReadWrite
 )
 
