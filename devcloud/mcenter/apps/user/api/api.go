@@ -5,6 +5,7 @@ import (
 	"github.com/infraboard/mcube/v2/ioc"
 	"github.com/infraboard/mcube/v2/ioc/config/gorestful"
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/user"
+	"github.com/sword-demon/go18/devcloud/mcenter/permission"
 )
 
 func init() {
@@ -37,6 +38,8 @@ func (h *UserRestfulApiHandler) Init() error {
 	ws.Route(ws.GET("").To(h.QueryUser).
 		Doc("查询用户").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
+		// 表示这个接口需要进行鉴权
+		Metadata(permission.Auth(true)).
 		Param(ws.QueryParameter("user_id", "用户ID数组,案例 user_id=1&user_id=2").DataType("string")).
 		Param(ws.QueryParameter("page_size", "分页大小").DataType("integer")).
 		Param(ws.QueryParameter("page_number", "分页页码").DataType("integer")).
