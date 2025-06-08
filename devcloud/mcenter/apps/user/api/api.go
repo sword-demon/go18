@@ -40,7 +40,6 @@ func (h *UserRestfulApiHandler) Init() error {
 		Param(ws.QueryParameter("user_id", "用户ID数组,案例 user_id=1&user_id=2").DataType("string")).
 		Param(ws.QueryParameter("page_size", "分页大小").DataType("integer")).
 		Param(ws.QueryParameter("page_number", "分页页码").DataType("integer")).
-		Reads(user.QueryUserRequest{}).
 		Writes(QuerySet{}).
 		Returns(200, "OK", QuerySet{}))
 
