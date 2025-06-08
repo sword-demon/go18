@@ -34,5 +34,21 @@ func (h *UserRestfulApiHandler) Init() error {
 		Writes(user.User{}).
 		Returns(200, "OK", user.User{}))
 
+	ws.Route(ws.GET("").To(h.QueryUser).
+		Doc("查询用户").
+		Metadata(restfulspec.KeyOpenAPITags, tags).
+		Param(ws.QueryParameter("user_id", "用户ID数组,案例 user_id=1&user_id=2").DataType("string")).
+		Param(ws.QueryParameter("page_size", "分页大小").DataType("integer")).
+		Param(ws.QueryParameter("page_number", "分页页码").DataType("integer")).
+		Reads(user.QueryUserRequest{}).
+		Writes(QuerySet{}).
+		Returns(200, "OK", QuerySet{}))
+
 	return nil
+}
+
+// QuerySet go-restful 的文档模式不支持泛型,所以这里额外进行定义
+type QuerySet struct {
+	Total int64       `json:"total"`
+	Items []user.User `json:"items"`
 }
