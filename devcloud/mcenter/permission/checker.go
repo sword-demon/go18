@@ -109,6 +109,12 @@ func (c *Checker) CheckToken(r *restful.Request) (*token.Token, error) {
 	return tk, nil
 }
 
+// CheckPolicy 验证策略
+// 获取当前访问的路由
 func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoint.RouteEntry) error {
+	// 判断用户是否是超级管理员,如果是的话,就不用继续了
+	if tk.IsAdmin {
+		return nil
+	}
 	return nil
 }

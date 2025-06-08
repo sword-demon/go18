@@ -58,6 +58,10 @@ func (i *TokenServiceImpl) IssueToken(ctx context.Context, req *token.IssueToken
 		panic("unhandled default case")
 	}
 
+	if tk.NamespaceId == 0 {
+		tk.NamespaceId = 1 // 给一个默认值 1
+	}
+
 	// 保存 token
 	if err := datasource.DBFromCtx(ctx).Create(tk).Error; err != nil {
 		return nil, err
