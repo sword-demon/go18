@@ -13,6 +13,10 @@ import (
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/api"
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/impl"
 
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/endpoint/impl"
+
 	// token 颁发器
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/issuers"
+	// 鉴权中间件
+	_ "github.com/sword-demon/go18/devcloud/mcenter/permission"
 )
