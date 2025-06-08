@@ -46,3 +46,14 @@ go mod init "github.com/sword-demon/go18"
 ```sh
 go get github.com/gin-gonic/gin
 ```
+
+## Makefile 打包版本号
+
+```bash
+> _output/devcloud-api -v
+Version   : v0.0.1
+Build Time: 2025-06-08 18:29:47
+Git Branch: main
+Git Commit: 0f1943534148425a71f1bd7c3e5cc7778d4a91af
+Go Version: go1.24.0 darwin/arm64
+```
