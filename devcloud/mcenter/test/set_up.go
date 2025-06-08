@@ -11,7 +11,7 @@ import (
 	"github.com/infraboard/mcube/v2/ioc"
 	"os"
 	// 加载的业务对象
-	//_ "github.com/sword-demon/go18/devcloud/mcenter/apps"
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps"
 )
 
 // DevelopmentSet 测试验证

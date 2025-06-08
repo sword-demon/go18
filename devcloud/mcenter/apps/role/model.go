@@ -10,6 +10,7 @@ import (
 	"github.com/infraboard/mcube/v2/ioc/config/validator"
 	"github.com/infraboard/mcube/v2/tools/pretty"
 	"github.com/infraboard/modules/iam/apps"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/endpoint"
 )
 
 type Role struct {
@@ -25,15 +26,29 @@ type Role struct {
 
 func NewRole() *Role {
 	return &Role{
-		ResourceMeta: *apps.NewResourceMeta(),
+		ResourceMeta:    *apps.NewResourceMeta(),
+		MenuPermissions: []*ViewPermission{},
+		ApiPermissions:  []*ApiPermission{},
 	}
 }
 
 func (r *Role) TableName() string {
-	return "role"
+	return "roles"
 }
 func (r *Role) String() string {
 	return pretty.ToJSON(r)
+}
+
+// CheckPerm 该角色是否允许该API访问
+func (r *Role) CheckPerm(re *endpoint.RouteEntry) error {
+	return nil
+}
+
+func NewCreateRoleRequest() *CreateRoleRequest {
+	return &CreateRoleRequest{
+		Extras:  map[string]string{},
+		Enabled: true,
+	}
 }
 
 type CreateRoleRequest struct {

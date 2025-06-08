@@ -14,6 +14,7 @@ import (
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/impl"
 
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/endpoint/impl"
+	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/role/impl"
 
 	// token 颁发器
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps/token/issuers"
