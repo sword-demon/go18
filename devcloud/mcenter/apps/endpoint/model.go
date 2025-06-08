@@ -52,7 +52,7 @@ func (e *Endpoint) IsMatched(service, method, path string) bool {
 	return true
 }
 
-func (e *Endpoint) SeRouteEntry(v RouteEntry) *Endpoint {
+func (e *Endpoint) SetRouteEntry(v RouteEntry) *Endpoint {
 	e.RouteEntry = v
 	return e
 }
@@ -168,9 +168,9 @@ func (r *RouteEntry) SetRequiredPerm(v bool) *RouteEntry {
 	return r
 }
 
-func (e *RouteEntry) SetLabel(value string) *RouteEntry {
-	e.ActionLabel = value
-	return e
+func (r *RouteEntry) SetLabel(value string) *RouteEntry {
+	r.ActionLabel = value
+	return r
 }
 
 func (r *RouteEntry) SetExtensionFromMap(m map[string]string) *RouteEntry {
@@ -223,12 +223,20 @@ func NewEntryFromRestRoute(route restful.Route) *RouteEntry {
 	return entry
 }
 
+// NewEntryFromRestfulContainer 获取 container 里的所有路由条目
 func NewEntryFromRestfulContainer(c *restful.Container) (entries []*RouteEntry) {
+	// 获取当前 container 里的所有 webService
 	wss := c.RegisteredWebServices()
 	for i := range wss {
-		for _, route := range wss[i].Routes() {
+		// 获取当前 webService 的所有路由
+		routes := wss[i].Routes()
+		for _, route := range routes {
+			// 将当前路由转换为 RouteEntry 实例
 			es := NewEntryFromRestRoute(route)
-			entries = append(entries, es)
+			if es != nil {
+				// 将非 nil 的 RouteEntry 实例添加到结果切片中
+				entries = append(entries, es)
+			}
 		}
 	}
 	return entries

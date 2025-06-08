@@ -13,7 +13,7 @@ port = 3306
 database = "devcloud_go18"
 username = "root"
 password = "admin888"
-auto_migrate = false
+auto_migrate = true
 debug = false
 
 [http]
