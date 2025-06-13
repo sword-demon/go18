@@ -4,19 +4,12 @@
 // this file is https://github.com/sword-demon/go18. The professional
 // version of this repository is https://github.com/sword-demon/go18.
 
-package impl
+package impl_test
 
 import (
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/token"
-	"github.com/sword-demon/go18/devcloud/mcenter/test"
 	"testing"
 )
-
-func TestBearer(t *testing.T) {
-	test.DevelopmentSet()
-	t.Log(token.MakeBearer(24))
-	t.Log(token.MakeBearer(24))
-}
 
 func TestIssueToken(t *testing.T) {
 	req := token.NewIssueTokenRequest()

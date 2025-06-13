@@ -49,6 +49,11 @@ type QueryRoleRequest struct {
 	RoleIds            []uint64 `json:"role_ids" form:"role_ids"`
 }
 
+func (r *QueryRoleRequest) AddRoleId(roleId uint64) *QueryRoleRequest {
+	r.RoleIds = append(r.RoleIds, roleId)
+	return r
+}
+
 func NewQueryRoleRequest() *QueryRoleRequest {
 	return &QueryRoleRequest{
 		PageRequest: request.NewDefaultPageRequest(),
