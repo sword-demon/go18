@@ -11,7 +11,9 @@ import (
 
 	// 加载业务对象
 	// 里面所有的 init 执行
+	_ "github.com/sword-demon/go18/devcloud/audit/apps"
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps"
+
 	// 加载 api doc
 	_ "github.com/infraboard/mcube/v2/ioc/apps/apidoc/restful"
 	// 健康检查
