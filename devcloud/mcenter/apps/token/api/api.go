@@ -47,14 +47,14 @@ func (h *TokenRestfulApiHandler) Init() error {
 	ws.Route(ws.POST("/validate").To(h.ValidateToken).
 		Doc("校验令牌").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(token.IssueTokenRequest{}).
+		Reads(token.ValidateTokenRequest{}).
 		Writes(token.Token{}).
 		Returns(200, "OK", token.Token{}))
 
 	ws.Route(ws.DELETE("").To(h.Logout).
 		Doc("撤销令牌(退出)").
 		Metadata(restfulspec.KeyOpenAPITags, tags).
-		Reads(token.IssueTokenRequest{}).
+		Reads(token.RevokeTokenRequest{}).
 		Writes(token.Token{}).
 		Returns(200, "OK", token.Token{}).
 		Returns(404, "Not Found", nil))

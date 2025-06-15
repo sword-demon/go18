@@ -9,12 +9,13 @@ import (
 
 // Event 用户操作事件 映射 MongoDB BSON 格式
 type Event struct {
-	Id           string `json:"id" bson:"_id"`
+	Id           string `json:"id" bson:"_id"` // mongodb 中的 _id 表示的是对象 id
 	Who          string `json:"who" bson:"who"`
 	Time         int64  `json:"time" bson:"time"`
 	Ip           string `json:"ip" bson:"ip"`
 	UserAgent    string `json:"user_agent" bson:"user_agent"`
-	Service      string `json:"service" bson:"service"` // Service 服务名称 做了什么操作 服务:资源:动作
+	Service      string `json:"service" bson:"service"`     // Service 服务名称 做了什么操作 服务:资源:动作
+	Namespace    string `json:"namespace" bson:"namespace"` // Namespace 命名空间
 	ResourceType string `json:"resource_type" bson:"resource_type"`
 	Action       string `json:"action" bson:"action"` // 操作类型 <list, get, update, create, delete>
 

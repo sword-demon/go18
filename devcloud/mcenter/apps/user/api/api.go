@@ -10,6 +10,7 @@ import (
 	restfulspec "github.com/emicklei/go-restful-openapi/v2"
 	"github.com/infraboard/mcube/v2/ioc"
 	"github.com/infraboard/mcube/v2/ioc/config/gorestful"
+	"github.com/sword-demon/go18/devcloud/audit/comptroller"
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/user"
 	"github.com/sword-demon/go18/devcloud/mcenter/permission"
 )
@@ -48,6 +49,7 @@ func (h *UserRestfulApiHandler) Init() error {
 		Metadata(permission.Auth(true)).
 		Metadata(permission.Action("list")).
 		Metadata(permission.Resource("user")).
+		Metadata(comptroller.Enable(true)). // 开启审计
 		Param(ws.QueryParameter("user_id", "用户ID数组,案例 user_id=1&user_id=2").DataType("string")).
 		Param(ws.QueryParameter("page_size", "分页大小").DataType("integer")).
 		Param(ws.QueryParameter("page_number", "分页页码").DataType("integer")).
