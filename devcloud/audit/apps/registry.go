@@ -7,6 +7,6 @@
 package apps
 
 import (
-	_ "github.com/sword-demon/go18/devcloud/audit/apps/operator/api"
-	_ "github.com/sword-demon/go18/devcloud/audit/apps/operator/impl"
+	_ "github.com/sword-demon/go18/devcloud/audit/apps/event/api"
+	_ "github.com/sword-demon/go18/devcloud/audit/apps/event/impl"
 )

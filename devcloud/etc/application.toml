@@ -16,6 +16,21 @@ password = "admin888"
 auto_migrate = true
 debug = false
 
+[mongo]
+endpoints = ["127.0.0.1:27017"]
+username = "admin"
+password = "secret"
+database = "devcloud_go18"
+# auth_db = "admin"
+# trace = true
+
+[kafka]
+brokers = ["127.0.0.1:9092"]
+scram_algorithm = "SHA512"
+username = ""
+password = ""
+# debug = false
+
 [http]
 host = "127.0.0.1"
 port = 8080

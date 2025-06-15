@@ -14,7 +14,12 @@ func TestListTopics(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	defer conn.Close()
+	defer func(conn *kafka.Conn) {
+		err := conn.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}(conn)
 
 	partitions, err := conn.ReadPartitions()
 	if err != nil {
@@ -37,7 +42,12 @@ func TestCreateTopic(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	defer conn.Close()
+	defer func(conn *kafka.Conn) {
+		err := conn.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}(conn)
 
 	controller, err := conn.Controller()
 	if err != nil {
@@ -49,7 +59,12 @@ func TestCreateTopic(t *testing.T) {
 	if err != nil {
 		panic(err.Error())
 	}
-	defer controllerConn.Close()
+	defer func(controllerConn *kafka.Conn) {
+		err := controllerConn.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}(controllerConn)
 
 	topicConfigs := []kafka.TopicConfig{
 		{
@@ -73,7 +88,12 @@ func TestWriteMessage(t *testing.T) {
 		// AllowAutoTopicCreation the topic will be created automatically if it does not exist
 		AllowAutoTopicCreation: true,
 	}
-	defer publisher.Close()
+	defer func(publisher *kafka.Writer) {
+		err := publisher.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}(publisher)
 
 	err := publisher.WriteMessages(context.Background(),
 		kafka.Message{
@@ -105,7 +125,12 @@ func TestReadMessage(t *testing.T) {
 		MinBytes: 10e3, // 10KB
 		MaxBytes: 10e6, // 10MB
 	})
-	defer subscriber.Close()
+	defer func(subscriber *kafka.Reader) {
+		err := subscriber.Close()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}(subscriber)
 
 	for {
 		m, err := subscriber.ReadMessage(context.Background())
