@@ -2,7 +2,7 @@
 
 ## 程序设计
 
-1. 需求手机，具体问题具体分析，给出具体的解决方案
+1. 需求收集，具体问题具体分析，给出具体的解决方案
 2. 问题抽象：建立这类问题的 通用解决模型(程序设计)
 3. 架构与实现
 
@@ -47,7 +47,19 @@ go mod init "github.com/sword-demon/go18"
 go get github.com/gin-gonic/gin
 ```
 
+### 后续使用 go-restful
+
+[github地址](https://github.com/emicklei/go-restful)
+
 ## Makefile 打包版本号
+
+```bash
+git tag -a v0.0.1 -m "release v0.0.1 your description"
+```
+
+```bash
+make all
+```
 
 ```bash
 > _output/devcloud-api -v
