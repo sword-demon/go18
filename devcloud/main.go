@@ -11,8 +11,13 @@ import (
 
 	// 加载业务对象
 	// 里面所有的 init 执行
+
+	// 审计
 	_ "github.com/sword-demon/go18/devcloud/audit/apps"
+	// 用户中心+认证
 	_ "github.com/sword-demon/go18/devcloud/mcenter/apps"
+	// 应用发布
+	_ "github.com/sword-demon/go18/devcloud/mpass/apps"
 
 	// 加载 api doc
 	_ "github.com/infraboard/mcube/v2/ioc/apps/apidoc/restful"
