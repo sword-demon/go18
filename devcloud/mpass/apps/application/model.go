@@ -149,6 +149,6 @@ type AppReadyAudit struct {
 }
 
 type AppStatus struct {
-	Ready    *bool      `json:"ready" bson:"ready" gorm:"column:ready" description:"应用是否已经准备就绪"`                           // 多方确认的一个过程
+	Ready    *bool      `json:"ready" bson:"ready" gorm:"column:ready" description:"应用是否已经准备就绪"`                             // 多方确认的一个过程
 	UpdateAt *time.Time `json:"ready_update_at" bson:"ready_update_at" gorm:"column:ready_update_at" description:"就绪状态修改时间"` // 应用状态更新时间
 }
