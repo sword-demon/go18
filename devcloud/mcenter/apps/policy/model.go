@@ -116,6 +116,10 @@ type ResourceScope struct {
 	Scope       map[string][]string `json:"scope" bson:"scope" gorm:"column:scope;serializer:json;type:json" description:"数据访问的范围" optional:"true"`
 }
 
+func (r *ResourceScope) SetNamespaceId(v uint64) {
+	r.NamespaceId = &v
+}
+
 func (r *ResourceScope) SetScope(key string, value []string) {
 	if r.Scope == nil {
 		r.Scope = map[string][]string{}

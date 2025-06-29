@@ -58,8 +58,8 @@ func (i *TokenServiceImpl) IssueToken(ctx context.Context, req *token.IssueToken
 		panic("unhandled default case")
 	}
 
-	if tk.NamespaceId == 0 {
-		tk.NamespaceId = 1 // 给一个默认值 1
+	if tk.GetNamespaceId() == 0 {
+		tk.SetNamespaceId(1) // 给一个默认值 1
 	}
 
 	// 保存 token
