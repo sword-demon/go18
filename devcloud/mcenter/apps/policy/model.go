@@ -16,6 +16,7 @@ import (
 	"gorm.io/datatypes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"strings"
 	"time"
 )
 
@@ -92,6 +93,23 @@ func (r *CreatePolicyRequest) SetNamespaceId(namespaceId uint64) *CreatePolicyRe
 	return r
 }
 
+func (r *ResourceScope) GetNamespaceId() uint64 {
+	if r.NamespaceId == nil {
+		return 0
+	}
+	return *r.NamespaceId
+}
+
+func (r *ResourceScope) BuildMySQLPrefixBlob() {
+	for k := range r.Scope {
+		for i := range r.Scope[k] {
+			if !strings.HasSuffix(r.Scope[k][i], "%") {
+				r.Scope[k][i] += "%"
+			}
+		}
+	}
+}
+
 // ResourceScope 资源需要组合 ResourceLabel 使用
 type ResourceScope struct {
 	NamespaceId *uint64             `json:"namespace_id" bson:"namespace_id" gorm:"column:namespace_id;type:varchar(200);index" description:"策略生效的空间 id" optional:"true"`
@@ -136,7 +154,7 @@ func (r *ResourceScope) GormResourceFilter(query *gorm.DB) *gorm.DB {
 }
 
 type ResourceLabel struct {
-	NamespaceId uint64            `json:"namespace_id" bson:"namespace_id" gorm:"column:namespace_id;type:varchar(200);index" description:"策略生效的空间 id" optional:"true"`
+	NamespaceId *uint64           `json:"namespace_id" bson:"namespace_id" gorm:"column:namespace_id;type:varchar(200);index" description:"策略生效的空间 id" optional:"true"`
 	Label       map[string]string `json:"label" bson:"label" gorm:"column:label;serializer:json;type:json" description:"资源标签, 用于标识资源的属性" optional:"true"`
 }
 
@@ -145,4 +163,8 @@ func (l *ResourceLabel) SetLabel(key, value string) {
 		l.Label = map[string]string{}
 	}
 	l.Label[key] = value
+}
+
+func (l *ResourceLabel) SetNamespaceId(v uint64) {
+	l.NamespaceId = &v
 }

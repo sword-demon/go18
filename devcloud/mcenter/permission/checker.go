@@ -124,7 +124,7 @@ func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoi
 	if route.HasRequiredRole() {
 		set, err := c.policy.QueryPolicy(r.Request.Context(),
 			policy.NewQueryPolicyRequest().
-				SetNamespaceId(tk.NamespaceId).
+				SetNamespaceId(tk.GetNamespaceId()).
 				SetUserId(tk.UserId).
 				SetExpired(false).
 				SetEnabled(true).
@@ -138,6 +138,8 @@ func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoi
 			p := set.Items[i]
 			if route.IsRequireRole(p.Role.Name) {
 				hasPerm = true
+
+				tk.Scope = p.Scope
 				break
 			}
 		}
@@ -151,7 +153,7 @@ func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoi
 	if route.RequiredPerm {
 		validateReq := policy.NewValidateEndpointPermissionRequest()
 		validateReq.UserId = tk.UserId
-		validateReq.NamespaceId = tk.NamespaceId
+		validateReq.ResourceScope = tk.ResourceScope
 		validateReq.Service = application.Get().GetAppName()
 		validateReq.Method = route.Method
 		validateReq.Path = route.Path
@@ -163,6 +165,9 @@ func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoi
 		if !resp.HasPermission {
 			return exception.NewPermissionDeny("无权限访问")
 		}
+
+		tk.ResourceScope = resp.ResourceScope
+		tk.BuildMySQLPrefixBlob()
 	}
 	return nil
 }

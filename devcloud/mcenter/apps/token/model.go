@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/infraboard/mcube/v2/exception"
 	"github.com/infraboard/mcube/v2/tools/pretty"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/policy"
 	"net/http"
 	"net/url"
 	"strings"
@@ -18,7 +19,7 @@ import (
 )
 
 type Token struct {
-	Id uint64 `json:"id" gorm:"column:id;type:uint;primary_key"`
+	Id uint64 `json:"id" gorm:"column:id;type:uint;primaryKey"`
 	// 用户来源
 	Source SOURCE `json:"source" gorm:"column:source;type:tinyint(1);index" description:"用户来源"`
 	// 颁发器, 办法方式(user/pass )
@@ -29,8 +30,12 @@ type Token struct {
 	UserName string `json:"user_name" gorm:"column:user_name;type:varchar(100);not null;index" description:"持有该Token的用户名称"`
 	// 是不是管理员
 	IsAdmin bool `json:"is_admin" gorm:"column:is_admin;type:tinyint(1)" description:"是不是管理员"`
+
+	// 令牌生效范围
+	policy.ResourceScope
+
 	// 令牌生效空间Id
-	NamespaceId uint64 `json:"namespace_id" gorm:"column:namespace_id;type:uint;index" description:"令牌所属空间Id"`
+	//NamespaceId uint64 `json:"namespace_id" gorm:"column:namespace_id;type:uint;index" description:"令牌所属空间Id"`
 	// 令牌生效空间名称
 	NamespaceName string `json:"namespace_name" gorm:"column:namespace_name;type:varchar(100);index" description:"令牌所属空间"`
 	// 访问范围定义, 鉴权完成后补充

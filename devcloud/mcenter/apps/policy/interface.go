@@ -162,6 +162,7 @@ type ValidateEndpointPermissionRequest struct {
 	Service     string `json:"service" form:"service"`
 	Path        string `json:"path" form:"path"`
 	Method      string `json:"method" form:"method"`
+	ResourceScope
 }
 
 func NewValidateEndpointPermissionRequest() *ValidateEndpointPermissionRequest {

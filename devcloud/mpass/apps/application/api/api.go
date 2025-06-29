@@ -27,14 +27,8 @@ func (h *ApplicationRestfulApiHandler) Name() string {
 func (h *ApplicationRestfulApiHandler) Init() error {
 	h.svc = application.GetService() // 获取服务
 
-	tags := []string{"应用接口"} // 文档的 tag
+	tags := []string{"应用管理"} // 文档的 tag
 	ws := gorestful.ObjectRouter(h)
-	//ws.Route(ws.POST("").To(h.CreateUser).
-	//	Doc("创建用户").
-	//	Metadata(restfulspec.KeyOpenAPITags, tags).
-	//	Reads(user.CreateUserRequest{}).
-	//	Writes(user.User{}).
-	//	Returns(200, "OK", user.User{}))
 
 	ws.Route(ws.GET("").To(h.QueryApplication).
 		Doc("查询应用列表").

@@ -13,6 +13,7 @@ func TestCreateApplication(t *testing.T) {
 	req.CodeRepository = application.CodeRepository{
 		SshUrl: "git@github.com:sword-demon/go18.git",
 	}
+	req.SetNamespaceId(1)
 	req.SetLabel("team", "dev01.web_developer")
 
 	ins, err := svc.CreateApplication(ctx, req)
