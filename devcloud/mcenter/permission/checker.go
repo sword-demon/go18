@@ -12,10 +12,12 @@ import (
 	"github.com/infraboard/mcube/v2/exception"
 	"github.com/infraboard/mcube/v2/http/restful/response"
 	"github.com/infraboard/mcube/v2/ioc"
+	"github.com/infraboard/mcube/v2/ioc/config/application"
 	"github.com/infraboard/mcube/v2/ioc/config/gorestful"
 	"github.com/infraboard/mcube/v2/ioc/config/log"
 	"github.com/rs/zerolog"
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/endpoint"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/policy"
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/token"
 )
 
@@ -43,7 +45,8 @@ type Checker struct {
 	ioc.ObjectImpl
 	log *zerolog.Logger
 
-	token token.Service
+	token  token.Service
+	policy policy.Service
 }
 
 func (c *Checker) Name() string {
@@ -59,6 +62,7 @@ func (c *Checker) Priority() int {
 func (c *Checker) Init() error {
 	c.log = log.Sub(c.Name())
 	c.token = token.GetService()
+	c.policy = policy.GetService()
 
 	gorestful.RootRouter().Filter(c.Check)
 	return nil
@@ -115,6 +119,50 @@ func (c *Checker) CheckPolicy(r *restful.Request, tk *token.Token, route *endpoi
 	// 判断用户是否是超级管理员,如果是的话,就不用继续了
 	if tk.IsAdmin {
 		return nil
+	}
+
+	if route.HasRequiredRole() {
+		set, err := c.policy.QueryPolicy(r.Request.Context(),
+			policy.NewQueryPolicyRequest().
+				SetNamespaceId(tk.NamespaceId).
+				SetUserId(tk.UserId).
+				SetExpired(false).
+				SetEnabled(true).
+				SetWithRole(true),
+		)
+		if err != nil {
+			return exception.NewInternalServerError("%s", err.Error())
+		}
+		hasPerm := false
+		for i := range set.Items {
+			p := set.Items[i]
+			if route.IsRequireRole(p.Role.Name) {
+				hasPerm = true
+				break
+			}
+		}
+
+		if !hasPerm {
+			return exception.NewPermissionDeny("无权限访问")
+		}
+	}
+
+	// api 权限校验
+	if route.RequiredPerm {
+		validateReq := policy.NewValidateEndpointPermissionRequest()
+		validateReq.UserId = tk.UserId
+		validateReq.NamespaceId = tk.NamespaceId
+		validateReq.Service = application.Get().GetAppName()
+		validateReq.Method = route.Method
+		validateReq.Path = route.Path
+		resp, err := c.policy.ValidateEndpointPermission(r.Request.Context(), validateReq)
+		if err != nil {
+			return exception.NewInternalServerError("%s", err.Error())
+		}
+
+		if !resp.HasPermission {
+			return exception.NewPermissionDeny("无权限访问")
+		}
 	}
 	return nil
 }

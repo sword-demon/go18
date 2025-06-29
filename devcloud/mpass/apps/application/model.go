@@ -10,14 +10,14 @@ import (
 	"bytes"
 	"github.com/google/uuid"
 	"github.com/infraboard/mcube/v2/ioc/config/validator"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/policy"
 	"time"
 )
 
 type Application struct {
-	Id       string    `json:"id" bson:"id"`
-	CreateAt time.Time `json:"created_at" bson:"created_at"`
-	UpdateAt time.Time `json:"updated_at" bson:"updated_at"`
-	UpdateBy string    `json:"update_by" bson:"update_by"`
+	Id       string     `json:"id" bson:"id"`
+	UpdateAt *time.Time `json:"updated_at" bson:"updated_at"` // 更新时间
+	UpdateBy string     `json:"update_by" bson:"update_by"`   // 更新人
 	CreateApplicationRequest
 }
 
@@ -71,10 +71,22 @@ func NewApplication(req CreateApplicationRequest) (*Application, error) {
 }
 
 type CreateApplicationRequest struct {
-	CreateBy              string `json:"create_by" bson:"create_by" description:"创建人"`
-	Namespace             string `json:"namespace" bson:"namespace" description:"应用命名空间 所属空间名称 从 token 中取出,不需要用户传递"`
-	CreateApplicationSpec        // 用户传递的参数
-	AppStatus                    // 应用状态
+	CreateBy              string    `json:"create_by" bson:"create_by" description:"创建人"`
+	CreateAt              time.Time `json:"create_at" bson:"create_at" gorm:"column:create_at" description:"创建时间"`
+	Namespace             string    `json:"namespace" bson:"namespace" description:"应用命名空间 所属空间名称 从 token 中取出,不需要用户传递"`
+	CreateApplicationSpec           // 用户传递的参数
+	AppStatus                       // 应用状态
+	policy.ResourceLabel            // 资源范围 Namespace 是继承的,Scope 是 API 添加的
+}
+
+func NewCreateApplicationRequest() *CreateApplicationRequest {
+	return &CreateApplicationRequest{
+		CreateAt: time.Now(),
+		CreateApplicationSpec: CreateApplicationSpec{
+			Extras:          map[string]string{},
+			ImageRepository: []ImageRepository{},
+		},
+	}
 }
 
 type CreateApplicationSpec struct {
