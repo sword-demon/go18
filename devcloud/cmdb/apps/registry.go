@@ -5,3 +5,8 @@
 // version of this repository is https://github.com/sword-demon/go18.
 
 package apps
+
+import (
+	_ "github.com/sword-demon/go18/devcloud/cmdb/apps/resource/impl"
+	_ "github.com/sword-demon/go18/devcloud/cmdb/apps/secret/impl"
+)

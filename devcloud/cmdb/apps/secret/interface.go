@@ -6,7 +6,13 @@
 
 package secret
 
-import "github.com/infraboard/mcube/v2/ioc"
+import (
+	"context"
+	"github.com/infraboard/mcube/v2/http/request"
+	"github.com/infraboard/mcube/v2/ioc"
+	"github.com/infraboard/mcube/v2/types"
+	"github.com/sword-demon/go18/devcloud/mcenter/apps/policy"
+)
 
 const (
 	AppName   = "secret"
@@ -18,4 +24,27 @@ func GetService() Service {
 }
 
 type Service interface {
+	CreateSecret(context.Context, *CreateSecretRequest) (*Secret, error)           // CreateSecret 创建 secret 用于 secret 的后台管理
+	QuerySecret(context.Context, *QuerySecretRequest) (*types.Set[*Secret], error) // QuerySecret 查询 secret
+	DescribeSecret(context.Context, *DescribeSecretRequest) (*Secret, error)       // DescribeSecret 查询详情,api 层需要脱敏
+}
+
+type QuerySecretRequest struct {
+	policy.ResourceScope
+	*request.PageRequest
+}
+
+func NewQuerySecretRequest() *QuerySecretRequest {
+	return &QuerySecretRequest{
+		PageRequest: request.NewDefaultPageRequest(),
+	}
+}
+
+type DescribeSecretRequest struct {
+	policy.ResourceScope
+	Id string `json:"id"`
+}
+
+func NewDescribeSecretRequest(id string) *DescribeSecretRequest {
+	return &DescribeSecretRequest{Id: id}
 }
