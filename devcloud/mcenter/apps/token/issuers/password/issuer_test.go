@@ -4,13 +4,14 @@
 // this file is https://github.com/sword-demon/go18. The professional
 // version of this repository is https://github.com/sword-demon/go18.
 
-package password
+package password_test
 
 import (
 	"context"
+	"testing"
+
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/token"
 	"github.com/sword-demon/go18/devcloud/mcenter/test"
-	"testing"
 )
 
 func TestPasswordIssuer(t *testing.T) {

@@ -4,10 +4,11 @@
 // this file is https://github.com/sword-demon/go18. The professional
 // version of this repository is https://github.com/sword-demon/go18.
 
-package impl
+package impl_test
 
 import (
 	"context"
+
 	"github.com/sword-demon/go18/devcloud/mcenter/apps/user"
 	"github.com/sword-demon/go18/devcloud/mcenter/test"
 )

@@ -5,3 +5,17 @@
 // version of this repository is https://github.com/sword-demon/go18.
 
 package secret
+
+import "github.com/infraboard/mcube/v2/ioc"
+
+const (
+	AppName   = "secret"
+	SecretKey = "21312dqwdqwxqweqwdqwdqwd+dwqdqwdqwdwqdqwdqwdqw+="
+)
+
+func GetService() Service {
+	return ioc.Controller().Get(AppName).(Service)
+}
+
+type Service interface {
+}

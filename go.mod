@@ -1,6 +1,8 @@
 module github.com/sword-demon/go18
 
-go 1.24.0
+go 1.24.1
+
+toolchain go1.24.4
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
@@ -9,6 +11,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/assert/v2 v2.2.0
 	github.com/google/uuid v1.6.0
+	github.com/infraboard/devops v0.0.6
 	github.com/infraboard/mcube/v2 v2.0.61
 	github.com/infraboard/modules v0.0.12
 	github.com/rs/xid v1.6.0
